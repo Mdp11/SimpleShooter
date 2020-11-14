@@ -3,7 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
+
+#include "Camera/CameraComponent.h"
 #include "GameFramework/Character.h"
+#include "GameFramework/SpringArmComponent.h"
+
 #include "ShooterCharacter.generated.h"
 
 UCLASS()
@@ -12,25 +16,26 @@ class SIMPLESHOOTER_API AShooterCharacter : public ACharacter
     GENERATED_BODY()
 
 public:
-    // Sets default values for this character's properties
     AShooterCharacter();
 
 protected:
-    // Called when the game starts or when spawned
     virtual void BeginPlay() override;
 
 public:
-    // Called every frame
     virtual void Tick(float DeltaTime) override;
 
-    // Called to bind functionality to input
-    virtual void SetupPlayerInputComponent(
-        class UInputComponent* PlayerInputComponent) override;
+    virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 private:
     UPROPERTY(EditAnywhere, Category="ControllerMovement")
     float RotationRate = 50.f;
-    
+
+    UPROPERTY(EditAnywhere, Category="Camera")
+    USpringArmComponent* SpringArmComponent{nullptr};
+
+    UPROPERTY(EditAnywhere, Category="Camera")
+    UCameraComponent* CameraComponent{nullptr};
+
     void MoveForward(const float AxisValue);
     void MoveRight(const float AxisValue);
     void LookUpRate(const float AxisValue);
