@@ -28,6 +28,11 @@ public:
         class UInputComponent* PlayerInputComponent) override;
 
 private:
+    UPROPERTY(EditAnywhere, Category="ControllerMovement")
+    float RotationRate = 50.f;
+    
     void MoveForward(const float AxisValue);
     void MoveRight(const float AxisValue);
+    void LookUpRate(const float AxisValue);
+    void LookRightRate(const float AxisValue);
 };
