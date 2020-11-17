@@ -30,6 +30,8 @@ void AShooterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
     PlayerInputComponent->BindAxis(TEXT("MoveForward"), this, &AShooterCharacter::MoveForward);
     PlayerInputComponent->BindAxis(TEXT("MoveRight"), this, &AShooterCharacter::MoveRight);
     PlayerInputComponent->BindAction(TEXT("Jump"), IE_Pressed, this, &ACharacter::Jump);
+    PlayerInputComponent->BindAction(TEXT("Run"), IE_Pressed, this, &AShooterCharacter::IncreaseSpeed);
+    PlayerInputComponent->BindAction(TEXT("Run"), IE_Released, this, &AShooterCharacter::RestoreSpeed);
     PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &APawn::AddControllerPitchInput);
     PlayerInputComponent->BindAxis(TEXT("LookRight"), this, &APawn::AddControllerYawInput);
     PlayerInputComponent->BindAxis(TEXT("LookUpRate"), this, &AShooterCharacter::LookUpRate);
@@ -38,12 +40,12 @@ void AShooterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 void AShooterCharacter::MoveForward(const float AxisValue)
 {
-    AddMovementInput(GetActorForwardVector() * AxisValue);
+    AddMovementInput(GetActorForwardVector(), AxisValue / SpeedModifier);
 }
 
 void AShooterCharacter::MoveRight(const float AxisValue)
 {
-    AddMovementInput(GetActorRightVector() * AxisValue);
+    AddMovementInput(GetActorRightVector(), AxisValue / SpeedModifier);
 }
 
 void AShooterCharacter::LookUpRate(const float AxisValue)
@@ -54,4 +56,14 @@ void AShooterCharacter::LookUpRate(const float AxisValue)
 void AShooterCharacter::LookRightRate(const float AxisValue)
 {
     AddControllerYawInput(AxisValue * RotationRate * GetWorld()->GetDeltaSeconds());
+}
+
+void AShooterCharacter::IncreaseSpeed()
+{
+    SpeedModifier = RunningSpeedMultiplier;
+}
+
+void AShooterCharacter::RestoreSpeed()
+{
+    SpeedModifier = WalkingSpeedMultiplier;
 }
