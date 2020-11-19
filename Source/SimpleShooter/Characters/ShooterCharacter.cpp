@@ -7,6 +7,7 @@
 AShooterCharacter::AShooterCharacter()
 {
     PrimaryActorTick.bCanEverTick = true;
+    SpeedModifier = DefaultSpeedModifier;
     SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComponent"));
     SpringArmComponent->SetupAttachment(RootComponent);
     CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
@@ -30,8 +31,9 @@ void AShooterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
     PlayerInputComponent->BindAxis(TEXT("MoveForward"), this, &AShooterCharacter::MoveForward);
     PlayerInputComponent->BindAxis(TEXT("MoveRight"), this, &AShooterCharacter::MoveRight);
     PlayerInputComponent->BindAction(TEXT("Jump"), IE_Pressed, this, &ACharacter::Jump);
-    PlayerInputComponent->BindAction(TEXT("Run"), IE_Pressed, this, &AShooterCharacter::IncreaseSpeed);
-    PlayerInputComponent->BindAction(TEXT("Run"), IE_Released, this, &AShooterCharacter::RestoreSpeed);
+    PlayerInputComponent->BindAction(TEXT("SwitchSpeed"), IE_Pressed, this, &AShooterCharacter::SwitchSpeed);
+    PlayerInputComponent->BindAction(TEXT("SwitchSpeed"), IE_Released, this, &AShooterCharacter::SwitchSpeed);
+    PlayerInputComponent->BindAction(TEXT("SwitchDefaultSpeed"), IE_Released, this, &AShooterCharacter::SwitchDefaultSpeed);
     PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &APawn::AddControllerPitchInput);
     PlayerInputComponent->BindAxis(TEXT("LookRight"), this, &APawn::AddControllerYawInput);
     PlayerInputComponent->BindAxis(TEXT("LookUpRate"), this, &AShooterCharacter::LookUpRate);
@@ -40,12 +42,14 @@ void AShooterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 void AShooterCharacter::MoveForward(const float AxisValue)
 {
-    AddMovementInput(GetActorForwardVector(), AxisValue / SpeedModifier);
+    const float Modifier = FMath::IsNearlyEqual(AxisValue, 350.f, 1) ? 1 : SpeedModifier;
+    AddMovementInput(GetActorForwardVector(), AxisValue * Modifier);
 }
 
 void AShooterCharacter::MoveRight(const float AxisValue)
 {
-    AddMovementInput(GetActorRightVector(), AxisValue / SpeedModifier);
+    const float Modifier = FMath::IsNearlyEqual(AxisValue, 350.f, 1) ? 1 : SpeedModifier;
+    AddMovementInput(GetActorRightVector(), AxisValue * Modifier);
 }
 
 void AShooterCharacter::LookUpRate(const float AxisValue)
@@ -58,12 +62,15 @@ void AShooterCharacter::LookRightRate(const float AxisValue)
     AddControllerYawInput(AxisValue * RotationRate * GetWorld()->GetDeltaSeconds());
 }
 
-void AShooterCharacter::IncreaseSpeed()
+void AShooterCharacter::SwitchSpeed()
 {
-    SpeedModifier = RunningSpeedMultiplier;
+    SpeedModifier = FMath::IsNearlyEqual(SpeedModifier, AlternateSpeedModifier)
+                        ? DefaultSpeedModifier
+                        : AlternateSpeedModifier;
 }
 
-void AShooterCharacter::RestoreSpeed()
+void AShooterCharacter::SwitchDefaultSpeed()
 {
-    SpeedModifier = WalkingSpeedMultiplier;
+    Swap(DefaultSpeedModifier, AlternateSpeedModifier);
+    SwitchSpeed();
 }

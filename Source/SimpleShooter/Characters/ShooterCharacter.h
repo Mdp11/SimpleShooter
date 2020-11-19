@@ -30,9 +30,9 @@ private:
     UPROPERTY(EditAnywhere, Category="ControllerMovement")
     float RotationRate = 50.f;
 
-    float SpeedModifier{RunningSpeedMultiplier};
-    const float RunningSpeedMultiplier = 1.2f;
-    const float WalkingSpeedMultiplier = 4.f;
+    float SpeedModifier{};
+    float DefaultSpeedModifier = 1.f;
+    float AlternateSpeedModifier = 0.3f;
 
     UPROPERTY(EditAnywhere, Category="Camera")
     USpringArmComponent* SpringArmComponent{nullptr};
@@ -44,6 +44,6 @@ private:
     void MoveRight(const float AxisValue);
     void LookUpRate(const float AxisValue);
     void LookRightRate(const float AxisValue);
-    void IncreaseSpeed();
-    void RestoreSpeed();
+    void SwitchSpeed();
+    void SwitchDefaultSpeed();
 };
