@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyrights Mattia De Prisco 2020
 
 #include "ShooterCharacter.h"
 
