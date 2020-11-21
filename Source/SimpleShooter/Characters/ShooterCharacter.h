@@ -7,6 +7,8 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "SimpleShooter/Gun.h"
+
 
 #include "ShooterCharacter.generated.h"
 
@@ -39,6 +41,12 @@ private:
 
     UPROPERTY(EditAnywhere, Category="Camera")
     UCameraComponent* CameraComponent{nullptr};
+
+    UPROPERTY(EditDefaultsOnly)
+    TSubclassOf<AGun> GunClass;
+
+    UPROPERTY()
+    AGun* Gun;
 
     void MoveForward(const float AxisValue);
     void MoveRight(const float AxisValue);
