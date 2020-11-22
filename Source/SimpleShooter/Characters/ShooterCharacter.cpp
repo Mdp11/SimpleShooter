@@ -35,14 +35,19 @@ void AShooterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
     PlayerInputComponent->BindAxis(TEXT("MoveForward"), this, &AShooterCharacter::MoveForward);
     PlayerInputComponent->BindAxis(TEXT("MoveRight"), this, &AShooterCharacter::MoveRight);
-    PlayerInputComponent->BindAction(TEXT("Jump"), IE_Pressed, this, &ACharacter::Jump);
-    PlayerInputComponent->BindAction(TEXT("SwitchSpeed"), IE_Pressed, this, &AShooterCharacter::SwitchSpeed);
-    PlayerInputComponent->BindAction(TEXT("SwitchSpeed"), IE_Released, this, &AShooterCharacter::SwitchSpeed);
-    PlayerInputComponent->BindAction(TEXT("SwitchDefaultSpeed"), IE_Released, this, &AShooterCharacter::SwitchDefaultSpeed);
+
     PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &APawn::AddControllerPitchInput);
     PlayerInputComponent->BindAxis(TEXT("LookRight"), this, &APawn::AddControllerYawInput);
     PlayerInputComponent->BindAxis(TEXT("LookUpRate"), this, &AShooterCharacter::LookUpRate);
     PlayerInputComponent->BindAxis(TEXT("LookRightRate"), this, &AShooterCharacter::LookRightRate);
+
+    PlayerInputComponent->BindAction(TEXT("SwitchSpeed"), IE_Pressed, this, &AShooterCharacter::SwitchSpeed);
+    PlayerInputComponent->BindAction(TEXT("SwitchSpeed"), IE_Released, this, &AShooterCharacter::SwitchSpeed);
+    PlayerInputComponent->BindAction(TEXT("SwitchDefaultSpeed"), IE_Released, this, &AShooterCharacter::SwitchDefaultSpeed);
+
+    PlayerInputComponent->BindAction(TEXT("Jump"), IE_Pressed, this, &ACharacter::Jump);
+
+    PlayerInputComponent->BindAction(TEXT("PullTrigger"), IE_Pressed, this, &AShooterCharacter::PullTrigger);
 }
 
 void AShooterCharacter::MoveForward(const float AxisValue)
@@ -78,4 +83,9 @@ void AShooterCharacter::SwitchDefaultSpeed()
 {
     Swap(DefaultSpeedModifier, AlternateSpeedModifier);
     SwitchSpeed();
+}
+
+void AShooterCharacter::PullTrigger()
+{
+    Gun->PullTrigger();
 }

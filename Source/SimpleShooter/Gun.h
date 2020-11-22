@@ -9,22 +9,26 @@
 UCLASS()
 class SIMPLESHOOTER_API AGun : public AActor
 {
-	GENERATED_BODY()
-	
-public:	
-	AGun();
+    GENERATED_BODY()
+
+public:
+    AGun();
+
+    void PullTrigger();
 
 protected:
-	virtual void BeginPlay() override;
+    virtual void BeginPlay() override;
 
-public:	
-	virtual void Tick(float DeltaTime) override;
+public:
+    virtual void Tick(float DeltaTime) override;
 
 private:
-	UPROPERTY(VisibleAnywhere)
-	USceneComponent* Root;
+    UPROPERTY(VisibleAnywhere)
+    USceneComponent* Root;
 
-	UPROPERTY(VisibleAnywhere)
-	USkeletalMeshComponent* Mesh;
+    UPROPERTY(VisibleAnywhere)
+    USkeletalMeshComponent* Mesh;
 
+    UPROPERTY(EditAnywhere)
+    UParticleSystem* MuzzleFlash;
 };
