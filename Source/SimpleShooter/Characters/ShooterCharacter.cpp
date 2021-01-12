@@ -46,7 +46,7 @@ void AShooterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
     PlayerInputComponent->BindAction(TEXT("SwitchSpeed"), IE_Released, this, &AShooterCharacter::SwitchSpeed);
     PlayerInputComponent->BindAction(TEXT("SwitchDefaultSpeed"), IE_Released, this, &AShooterCharacter::SwitchDefaultSpeed);
 
-    PlayerInputComponent->BindAction(TEXT("Jump"), IE_Pressed, this, &ACharacter::Jump);
+    // PlayerInputComponent->BindAction(TEXT("Jump"), IE_Pressed, this, &ACharacter::Jump);
 
     PlayerInputComponent->BindAction(TEXT("PullTrigger"), IE_Pressed, this, &AShooterCharacter::PullTrigger);
 }
