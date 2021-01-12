@@ -7,10 +7,11 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "SimpleShooter/Gun.h"
 
 
 #include "ShooterCharacter.generated.h"
+
+class AGun;
 
 UCLASS()
 class SIMPLESHOOTER_API AShooterCharacter : public ACharacter

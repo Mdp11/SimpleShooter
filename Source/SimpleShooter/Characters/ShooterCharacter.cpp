@@ -3,6 +3,7 @@
 #include "ShooterCharacter.h"
 
 #include "Kismet/GameplayStatics.h"
+#include "SimpleShooter/Gun.h"
 
 AShooterCharacter::AShooterCharacter()
 {
