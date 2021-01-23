@@ -17,7 +17,6 @@ AGun::AGun()
 
 void AGun::PullTrigger()
 {
-    UE_LOG(LogTemp, Warning, TEXT("Shot!"));
     UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, Mesh, TEXT("MuzzleFlashSocket"));
 }
 
