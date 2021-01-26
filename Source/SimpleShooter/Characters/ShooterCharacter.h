@@ -29,6 +29,8 @@ public:
 
     virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+    virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
+
 private:
     UPROPERTY(EditAnywhere, Category="ControllerMovement")
     float RotationRate = 50.f;
@@ -48,6 +50,12 @@ private:
 
     UPROPERTY()
     AGun* Gun;
+
+    UPROPERTY(EditDefaultsOnly)
+    float MaxHealth{100.f};
+
+    UPROPERTY(VisibleAnywhere)
+    float Health;
 
     void MoveForward(const float AxisValue);
     void MoveRight(const float AxisValue);

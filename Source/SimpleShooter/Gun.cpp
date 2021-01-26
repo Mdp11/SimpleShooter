@@ -38,8 +38,17 @@ void AGun::PullTrigger()
 	                                                              ECC_GameTraceChannel1);
 	if (bHitSuccess)
 	{
+		FVector ShotDirection = PlayerViewPointRotation.GetInverse().Vector();
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), HitEffect, HitResult.Location,
-		                                         PlayerViewPointRotation.GetInverse());
+		                                         ShotDirection.Rotation());
+
+		AActor* ActorHit = HitResult.GetActor();
+		if (ActorHit)
+		{
+			FPointDamageEvent DamageEvent{Damage, HitResult, ShotDirection, nullptr};
+			ActorHit->TakeDamage(Damage, DamageEvent, OwnerController, this);	
+		}
+
 	}
 }
 
