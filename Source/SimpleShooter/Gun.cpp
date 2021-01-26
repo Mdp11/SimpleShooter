@@ -38,8 +38,8 @@ void AGun::PullTrigger()
 	                                                              ECC_GameTraceChannel1);
 	if (bHitSuccess)
 	{
-		const FVector ShotDirection = -PlayerViewPointRotation.Vector();
-		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), HitEffect, HitResult.Location, ShotDirection.Rotation());
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), HitEffect, HitResult.Location,
+		                                         PlayerViewPointRotation.GetInverse());
 	}
 }
 
