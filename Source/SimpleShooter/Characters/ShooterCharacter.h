@@ -24,6 +24,9 @@ public:
 protected:
     virtual void BeginPlay() override;
 
+    UFUNCTION(BlueprintPure)
+    bool IsDead() const;
+
 public:
     virtual void Tick(float DeltaTime) override;
 
