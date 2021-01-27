@@ -10,20 +10,21 @@
 void AShooterAIController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-	// UE_LOG(LogTemp, Warning, TEXT("TICKO"));
-	//
-	// AActor* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-	//
-	// if (LineOfSightTo(PlayerPawn))
-	// {
-	// 	MoveToActor(PlayerPawn, 100.f);
-	// 	SetFocus(PlayerPawn);
-	// }
-	// else
-	// {
-	// 	ClearFocus(EAIFocusPriority::Gameplay);
-	// 	StopMovement();
-	// }
+
+	UBlackboardComponent* BlackboardComponent = GetBlackboardComponent();
+
+	AActor* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+	if (LineOfSightTo(PlayerPawn))
+	{
+		BlackboardComponent->SetValueAsVector(TEXT("PlayerLocation"),
+		                                      UGameplayStatics::GetPlayerPawn(GetWorld(), 0)->GetActorLocation());
+		BlackboardComponent->SetValueAsVector(TEXT("PlayerLastKnownLocation"),
+		                                      UGameplayStatics::GetPlayerPawn(GetWorld(), 0)->GetActorLocation());
+	}
+	else
+	{
+		BlackboardComponent->ClearValue("PlayerLocation");
+	}
 }
 
 void AShooterAIController::BeginPlay()
@@ -33,9 +34,7 @@ void AShooterAIController::BeginPlay()
 	{
 		RunBehaviorTree(AIBehavior);
 		UBlackboardComponent* BlackboardComponent = GetBlackboardComponent();
-		BlackboardComponent->SetValueAsVector("PlayerLocation",
-		                                      UGameplayStatics::GetPlayerPawn(GetWorld(), 0)->GetActorLocation());
-		BlackboardComponent->SetValueAsVector("StartLocation",
+		BlackboardComponent->SetValueAsVector(TEXT("StartLocation"),
 		                                      GetPawn()->GetActorLocation());
 	}
 }
