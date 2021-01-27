@@ -43,7 +43,7 @@ void AGun::PullTrigger()
 		                                         ShotDirection.Rotation());
 
 		AActor* ActorHit = HitResult.GetActor();
-		if (ActorHit)
+		if (ActorHit && ActorHit != OwnerPawn)
 		{
 			FPointDamageEvent DamageEvent{Damage, HitResult, ShotDirection, nullptr};
 			ActorHit->TakeDamage(Damage, DamageEvent, OwnerController, this);	
