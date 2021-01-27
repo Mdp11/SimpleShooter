@@ -34,6 +34,8 @@ public:
 
     virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 
+    void PullTrigger();    
+
 private:
     UPROPERTY(EditAnywhere, Category="ControllerMovement")
     float RotationRate = 50.f;
@@ -69,6 +71,5 @@ private:
     void SwitchSpeed();
     void SwitchDefaultSpeed();
 
-    void PullTrigger();
     
 };
