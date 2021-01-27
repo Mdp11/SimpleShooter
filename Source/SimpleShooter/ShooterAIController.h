@@ -17,8 +17,13 @@ class SIMPLESHOOTER_API AShooterAIController : public AAIController
 public:
 	virtual void Tick(float DeltaSeconds) override;
 
-private:
-	UPROPERTY(EditAnywhere)
-	float AcceptanceRadius{200.f};
+protected:
+	virtual void BeginPlay() override;
 
+private:
+	// UPROPERTY(EditAnywhere)
+	// float AcceptanceRadius{200.f};
+
+	UPROPERTY(EditAnywhere)
+	UBehaviorTree* AIBehavior;
 };
