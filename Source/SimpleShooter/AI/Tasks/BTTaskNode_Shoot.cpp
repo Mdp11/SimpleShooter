@@ -4,7 +4,7 @@
 #include "BTTaskNode_Shoot.h"
 
 #include "AIController.h"
-#include "Characters/ShooterCharacter.h"
+#include "SimpleShooter/Characters/ShooterCharacter.h"
 
 UBTTaskNode_Shoot::UBTTaskNode_Shoot()
 {
