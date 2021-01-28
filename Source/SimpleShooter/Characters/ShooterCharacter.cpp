@@ -2,6 +2,8 @@
 
 #include "ShooterCharacter.h"
 
+
+#include "Components/CapsuleComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "SimpleShooter/Gun.h"
 
@@ -63,7 +65,13 @@ float AShooterCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Dama
 {
     const float DamageTaken = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
     Health = FMath::Clamp(Health - DamageTaken, 0.f, MaxHealth);
-    UE_LOG(LogTemp, Warning, TEXT("Health now %f"), Health);
+
+    if(IsDead())
+    {
+        DetachFromControllerPendingDestroy();
+        GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+    }
+    
     return DamageTaken;
 }
 

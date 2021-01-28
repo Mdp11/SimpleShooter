@@ -34,8 +34,11 @@ void AGun::PullTrigger()
 	const FVector BulletEndPoint = PlayerViewPointLocation + PlayerViewPointRotation.Vector() * MaxRange;
 
 	FHitResult HitResult;
+	FCollisionQueryParams CollisionQueryParams;
+	CollisionQueryParams.AddIgnoredActor(this);
+	CollisionQueryParams.AddIgnoredActor(GetOwner());
 	const bool bHitSuccess = GetWorld()->LineTraceSingleByChannel(HitResult, PlayerViewPointLocation, BulletEndPoint,
-	                                                              ECC_GameTraceChannel1);
+	                                                              ECC_GameTraceChannel1, CollisionQueryParams);
 	if (bHitSuccess)
 	{
 		FVector ShotDirection = PlayerViewPointRotation.GetInverse().Vector();
@@ -43,7 +46,7 @@ void AGun::PullTrigger()
 		                                         ShotDirection.Rotation());
 
 		AActor* ActorHit = HitResult.GetActor();
-		if (ActorHit && ActorHit != OwnerPawn)
+		if (ActorHit)
 		{
 			FPointDamageEvent DamageEvent{Damage, HitResult, ShotDirection, nullptr};
 			ActorHit->TakeDamage(Damage, DamageEvent, OwnerController, this);	
