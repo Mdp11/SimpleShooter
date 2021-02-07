@@ -16,60 +16,59 @@ class AGun;
 UCLASS()
 class SIMPLESHOOTER_API AShooterCharacter : public ACharacter
 {
-    GENERATED_BODY()
+	GENERATED_BODY()
 
 public:
-    AShooterCharacter();
+	AShooterCharacter();
+
+	UFUNCTION(BlueprintPure)
+	bool IsDead() const;
 
 protected:
-    virtual void BeginPlay() override;
-
-    UFUNCTION(BlueprintPure)
-    bool IsDead() const;
+	virtual void BeginPlay() override;
 
 public:
-    virtual void Tick(float DeltaTime) override;
+	virtual void Tick(float DeltaTime) override;
 
-    virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-    virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
+	                         class AController* EventInstigator, AActor* DamageCauser) override;
 
-    void PullTrigger();    
+	void PullTrigger();
 
 private:
-    UPROPERTY(EditAnywhere, Category="ControllerMovement")
-    float RotationRate = 50.f;
+	UPROPERTY(EditAnywhere, Category="ControllerMovement")
+	float RotationRate = 50.f;
 
-    float SpeedModifier{};
-    float DefaultSpeedModifier = 1.f;
-    float AlternateSpeedModifier = 0.3f;
+	float SpeedModifier{};
+	float DefaultSpeedModifier = 1.f;
+	float AlternateSpeedModifier = 0.3f;
 
-    UPROPERTY(EditAnywhere, Category="Camera")
-    USpringArmComponent* SpringArmComponent{nullptr};
+	UPROPERTY(EditAnywhere, Category="Camera")
+	USpringArmComponent* SpringArmComponent{nullptr};
 
-    UPROPERTY(EditAnywhere, Category="Camera")
-    UCameraComponent* CameraComponent{nullptr};
+	UPROPERTY(EditAnywhere, Category="Camera")
+	UCameraComponent* CameraComponent{nullptr};
 
-    UPROPERTY(EditDefaultsOnly)
-    TSubclassOf<AGun> GunClass;
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AGun> GunClass;
 
-    UPROPERTY()
-    AGun* Gun;
+	UPROPERTY()
+	AGun* Gun;
 
-    UPROPERTY(EditDefaultsOnly)
-    float MaxHealth{100.f};
+	UPROPERTY(EditDefaultsOnly)
+	float MaxHealth{100.f};
 
-    UPROPERTY(VisibleAnywhere)
-    float Health;
+	UPROPERTY(VisibleAnywhere)
+	float Health;
 
-    void MoveForward(const float AxisValue);
-    void MoveRight(const float AxisValue);
-    
-    void LookUpRate(const float AxisValue);
-    void LookRightRate(const float AxisValue);
-    
-    void SwitchSpeed();
-    void SwitchDefaultSpeed();
+	void MoveForward(const float AxisValue);
+	void MoveRight(const float AxisValue);
 
-    
+	void LookUpRate(const float AxisValue);
+	void LookRightRate(const float AxisValue);
+
+	void SwitchSpeed();
+	void SwitchDefaultSpeed();
 };

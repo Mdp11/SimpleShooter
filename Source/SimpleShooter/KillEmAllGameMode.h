@@ -18,5 +18,5 @@ public:
 	virtual void PawnKilled(APawn* PawnKilled) override;
 
 private:
-	void EndGame(bool bPlayerWon);
+	void EndGame(bool bPlayerWon) const;
 };
