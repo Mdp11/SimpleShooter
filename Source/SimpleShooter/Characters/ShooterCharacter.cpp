@@ -5,7 +5,7 @@
 
 #include "Components/CapsuleComponent.h"
 #include "Kismet/GameplayStatics.h"
-#include "SimpleShooter/Gun.h"
+#include "SimpleShooter/Weapons/Gun.h"
 #include "SimpleShooter/SimpleShooterGameModeBase.h"
 
 AShooterCharacter::AShooterCharacter()

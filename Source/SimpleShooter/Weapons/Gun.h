@@ -14,20 +14,10 @@ class SIMPLESHOOTER_API AGun : public AActor
 public:
 	AGun();
 
-	void PullTrigger();
+	virtual void PullTrigger();
 
 protected:
 	virtual void BeginPlay() override;
-
-public:
-	virtual void Tick(float DeltaTime) override;
-
-private:
-	UPROPERTY(VisibleAnywhere)
-	USceneComponent* Root;
-
-	UPROPERTY(VisibleAnywhere)
-	USkeletalMeshComponent* Mesh;
 
 	UPROPERTY(EditAnywhere)
 	UParticleSystem* MuzzleFlash;
@@ -47,7 +37,18 @@ private:
 	UPROPERTY(EditAnywhere)
 	float Damage{10.f};
 
+	AController* GetOwnerController() const;
+
+public:
+	virtual void Tick(float DeltaTime) override;
+
+private:
+	UPROPERTY(VisibleAnywhere)
+	USceneComponent* Root;
+
+	UPROPERTY(VisibleAnywhere)
+	USkeletalMeshComponent* Mesh;
+
 	bool GunTrace(FHitResult& HitResult, FVector& ShotDirection);
 
-	AController* GetOwnerController() const;
 };

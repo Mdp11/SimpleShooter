@@ -4,7 +4,7 @@
 
 #include "Kismet/GameplayStatics.h"
 #include "DrawDebugHelpers.h"
-#include "Characters/ShooterCharacter.h"
+#include "SimpleShooter/Characters/ShooterCharacter.h"
 
 AGun::AGun()
 {
