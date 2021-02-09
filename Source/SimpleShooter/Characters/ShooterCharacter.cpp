@@ -35,6 +35,11 @@ bool AShooterCharacter::IsDead() const
 	return Health == 0.f;
 }
 
+float AShooterCharacter::GetCurrentHealth() const
+{
+	return Health / MaxHealth;
+}
+
 void AShooterCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);

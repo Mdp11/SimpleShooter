@@ -9,7 +9,9 @@ void AShooterPlayerController::GameHasEnded(AActor* EndGameFocus, bool bIsWinner
 {
 	Super::GameHasEnded(EndGameFocus, bIsWinner);
 
-	if(bIsWinner)
+	Hud->RemoveFromViewport();
+
+	if (bIsWinner)
 	{
 		UUserWidget* WinScreen = CreateWidget(this, WinScreenClass, TEXT("WinScreen"));
 		if (WinScreen)
@@ -26,10 +28,20 @@ void AShooterPlayerController::GameHasEnded(AActor* EndGameFocus, bool bIsWinner
 		}
 	}
 
-	GetWorldTimerManager().SetTimer(RestarTimer, this, &APlayerController::RestartLevel, RestartDelay);
+	GetWorldTimerManager().SetTimer(RestartTimer, this, &APlayerController::RestartLevel, RestartDelay);
 }
 
 float AShooterPlayerController::GetRestartDelay() const
 {
 	return RestartDelay;
+}
+
+void AShooterPlayerController::BeginPlay()
+{
+	Super::BeginPlay();
+	Hud = CreateWidget(this, HudClass, TEXT("HUD"));
+	if (Hud)
+	{
+		Hud->AddToViewport();
+	}
 }

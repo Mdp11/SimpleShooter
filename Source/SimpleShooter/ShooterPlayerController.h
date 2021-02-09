@@ -20,15 +20,25 @@ public:
 	UFUNCTION(BlueprintPure)
 	float GetRestartDelay() const;
 
+protected:
+	virtual void BeginPlay() override;
+
+
 private:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UUserWidget> LoseScreenClass;
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UUserWidget> WinScreenClass;
-	
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UUserWidget> HudClass;
+
 	UPROPERTY(EditAnywhere)
 	float RestartDelay{5.0f};
 
-	FTimerHandle RestarTimer;
+	FTimerHandle RestartTimer;
+
+	UPROPERTY(EditAnywhere)
+	UUserWidget* Hud;
 };
